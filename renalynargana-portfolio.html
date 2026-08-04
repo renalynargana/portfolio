@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Renalyn D. Argana — QA / Software Test Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper: #F6F7F4;
+    --grid-line: rgba(44,92,138,0.06);
+    --ink: #1B2436;
+    --ink-soft: #57626D;
+    --red: #B3352B;
+    --red-bg: #F7E9E7;
+    --blue: #2C5C8A;
+    --blue-bg: #EAF0F6;
+    --line: #D9DFE3;
+    --radius: 2px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior: auto; }
+    *{ animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
+  }
+
+  body{
+    margin: 0;
+    background-color: var(--paper);
+    background-image:
+      linear-gradient(var(--grid-line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+    background-size: 26px 26px;
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a{ color: inherit; }
+  h1, h2, h3{ font-family: 'Oswald', sans-serif; margin: 0; text-transform: uppercase; letter-spacing: 0.01em; }
+  .mono{ font-family: 'IBM Plex Mono', monospace; }
+  .wrap{ max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  :focus-visible{ outline: 2px solid var(--red); outline-offset: 3px; }
+
+  .scroll-progress{ position: fixed; top: 0; left: 0; height: 2.5px; width: 0%; background: var(--red); z-index: 200; transition: width 0.1s ease-out; }
+
+  @keyframes fadeUp{ from{ opacity: 0; transform: translateY(16px); } to{ opacity: 1; transform: translateY(0); } }
+  .hero-anim{ opacity: 0; animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) forwards; }
+  .reveal{ opacity: 0; transform: translateY(14px); transition: opacity 0.6s ease, transform 0.6s ease, border-color 0.2s ease, box-shadow 0.2s ease; }
+  .reveal.in-view{ opacity: 1; transform: translateY(0); }
+
+  /* Header */
+  header{
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(246,247,244,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 2px solid var(--ink);
+  }
+  .nav{ display: flex; align-items: center; justify-content: space-between; padding: 18px 32px; max-width: 1080px; margin: 0 auto; }
+  .brand{ display: flex; align-items: center; gap: 10px; font-family: 'Oswald', sans-serif; font-weight: 600; font-size: 17px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.03em; }
+  .brand .id-tag{
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); border: 1px solid var(--red);
+    padding: 2px 6px; border-radius: var(--radius); text-transform: none; letter-spacing: 0;
+  }
+  .nav-links{ display: flex; align-items: center; gap: 26px; }
+  nav ul{ list-style: none; display: flex; gap: 26px; margin: 0; padding: 0; }
+  nav a{
+    text-decoration: none; font-size: 13px; font-weight: 500; color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.06em; font-family: 'IBM Plex Mono', monospace;
+    transition: color 0.15s ease; position: relative; padding-bottom: 3px;
+  }
+  nav a::before{ content: "· "; color: var(--red); }
+  nav a:hover, nav a.active{ color: var(--ink); }
+  .nav-cta{
+    border: 1.5px solid var(--ink); padding: 7px 14px; border-radius: var(--radius);
+    font-size: 12px !important; color: var(--ink) !important;
+  }
+  .nav-cta:hover{ background: var(--ink); color: var(--paper) !important; }
+  @media (max-width: 860px){ .nav-links ul{ display: none; } }
+
+  /* Hero */
+  .hero{ padding: 84px 0 56px; border-bottom: 2px solid var(--ink); position: relative; }
+  .hero-grid{ display: grid; grid-template-columns: 1.25fr 0.9fr; gap: 48px; align-items: center; }
+  .eyebrow{
+    font-family: 'IBM Plex Mono', monospace; font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--red); display: flex; align-items: center; gap: 10px; margin-bottom: 18px;
+  }
+  .eyebrow::before{ content: ""; width: 20px; height: 1px; background: var(--red); }
+  .hero h1{ font-size: 44px; font-weight: 600; line-height: 1.14; max-width: 600px; }
+  .hero h1 em{ font-style: normal; color: var(--red); }
+  .hero p.lede{ margin-top: 20px; font-size: 17px; color: var(--ink-soft); max-width: 470px; font-family: 'IBM Plex Sans'; text-transform: none; }
+  .hero-ctas{ display: flex; gap: 14px; margin-top: 32px; flex-wrap: wrap; }
+  .btn{
+    font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 13px; padding: 13px 22px;
+    border-radius: var(--radius); text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+    cursor: pointer; border: 1.5px solid transparent; text-transform: uppercase; letter-spacing: 0.04em;
+    transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  }
+  .btn-primary{ background: var(--ink); color: var(--paper); }
+  .btn-primary:hover{ transform: translateY(-1px); background: #0F1826; }
+  .btn-ghost{ border-color: var(--ink); color: var(--ink); }
+  .btn-ghost:hover{ background: var(--ink); color: var(--paper); }
+
+  /* Inspection tag card (hero + systems) */
+  .tag-card{
+    background: #FFFFFF; border: 1.5px dashed var(--ink); border-radius: 8px;
+    padding: 28px 24px 22px; position: relative;
+  }
+  .tag-card::before{
+    content: ""; position: absolute; top: -9px; left: 50%; transform: translateX(-50%);
+    width: 16px; height: 16px; border-radius: 50%; background: var(--paper); border: 1.5px solid var(--ink);
+  }
+  .tag-card::after{
+    content: ""; position: absolute; top: -3px; left: 50%; transform: translateX(-50%);
+    width: 6px; height: 6px; border-radius: 50%; background: var(--ink);
+  }
+  .tag-head{ display: flex; justify-content: space-between; align-items: flex-start; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 14px; }
+  .tag-field{ display: flex; justify-content: space-between; padding: 9px 0; border-top: 1px dashed var(--line); font-size: 13.5px; }
+  .tag-field:first-of-type{ border-top: none; }
+  .tag-field .k{ color: var(--ink-soft); font-family: 'IBM Plex Mono', monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tag-field .v{ font-weight: 500; text-align: right; }
+  .stamp{
+    position: absolute; bottom: 14px; right: 18px;
+    font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: 0.08em;
+    color: var(--red); border: 2.5px solid var(--red); border-radius: 4px; padding: 4px 10px;
+    transform: rotate(-9deg); opacity: 0.88; mix-blend-mode: multiply;
+  }
+
+  section{ padding: 76px 0; }
+  .section-head{ display: flex; justify-content: space-between; align-items: flex-end; gap: 24px; margin-bottom: 40px; border-bottom: 2px solid var(--ink); padding-bottom: 18px; }
+  .section-head h2{ font-size: 26px; font-weight: 600; }
+  .section-head .count{ font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink-soft); white-space: nowrap; text-transform: none; }
+
+  /* Experience — form record style */
+  .record{ border: 1.5px solid var(--ink); border-radius: var(--radius); padding: 24px 26px; margin-bottom: 20px; background: #FFFFFF; }
+  .record-row{ display: grid; grid-template-columns: 120px 1fr; gap: 16px; padding: 8px 0; border-top: 1px dashed var(--line); }
+  .record-row:first-child{ border-top: none; padding-top: 0; }
+  .record-row .k{ font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; padding-top: 3px; }
+  .record-row .v{ font-size: 14.5px; }
+  .record h3{ font-size: 20px; margin-bottom: 2px; }
+  .record ul{ margin: 8px 0 0; padding-left: 0; list-style: none; }
+  .record li{ font-size: 14px; color: var(--ink-soft); margin-bottom: 7px; padding-left: 22px; position: relative; }
+  .record li::before{ content: "☑"; position: absolute; left: 0; color: var(--blue); font-size: 13px; }
+
+  /* Systems grid */
+  .systems{ border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); background: repeating-linear-gradient(135deg, rgba(179,53,43,0.015) 0 12px, transparent 12px 24px); }
+  .sys-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 20px; }
+  .sys-tag{
+    background: #FFFFFF; border: 1.5px solid var(--ink); border-radius: var(--radius); padding: 18px 16px 16px;
+    position: relative; opacity: 0; transform: translateY(12px);
+    transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease;
+  }
+  .sys-tag.in-view{ opacity: 1; transform: translateY(0); }
+  .sys-tag:hover{ box-shadow: 4px 4px 0 var(--ink); transform: translate(-2px,-2px); }
+  .sys-tag::before{ content: ""; position: absolute; top: 10px; left: 10px; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid var(--ink-soft); background: var(--paper); }
+  .sys-id{ font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ink-soft); letter-spacing: 0.05em; display: block; text-align: right; margin-bottom: 10px; }
+  .sys-tag h4{ font-family: 'IBM Plex Sans', sans-serif; text-transform: none; font-size: 14.5px; font-weight: 600; letter-spacing: 0; line-height: 1.35; padding-right: 44px; }
+  .mini-stamp{
+    position: absolute; bottom: 10px; right: 10px; font-family: 'Oswald', sans-serif; font-weight: 700;
+    font-size: 10px; letter-spacing: 0.06em; color: var(--red); border: 1.5px solid var(--red); border-radius: 3px;
+    padding: 2px 6px; transform: rotate(-8deg); opacity: 0; mix-blend-mode: multiply;
+    transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
+  }
+  .sys-tag.in-view .mini-stamp{ opacity: 0.9; transform: rotate(-8deg) scale(1); }
+
+  /* Skills */
+  .about-grid{ display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 52px; }
+  .about-grid p{ font-size: 16px; color: var(--ink-soft); margin-bottom: 14px; text-transform: none; font-family: 'IBM Plex Sans'; }
+  .tool-tags{ display: flex; flex-wrap: wrap; gap: 8px; }
+  .tool-tag{
+    font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--ink);
+    border: 1px solid var(--ink); background: #FFFFFF; padding: 7px 13px; border-radius: var(--radius);
+  }
+  .checklist{ display: flex; flex-direction: column; }
+  .check-row{ display: flex; gap: 14px; padding: 16px 0; border-top: 1px dashed var(--line); align-items: flex-start; }
+  .check-row:last-child{ border-bottom: 1px dashed var(--line); }
+  .check-row .box{
+    width: 18px; height: 18px; border: 1.5px solid var(--blue); border-radius: 3px; flex-shrink: 0; margin-top: 2px;
+    display: flex; align-items: center; justify-content: center; color: var(--blue); font-size: 12px; font-weight: 700;
+  }
+  .check-row h4{ font-family: 'IBM Plex Sans', sans-serif; text-transform: none; font-size: 15px; font-weight: 600; margin: 0 0 4px; letter-spacing: 0; }
+  .check-row p{ font-size: 13.5px; color: var(--ink-soft); margin: 0; }
+
+  /* Certifications — seals */
+  .seal-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .seal{ display: flex; gap: 16px; align-items: flex-start; border: 1px solid var(--line); background: #FFFFFF; border-radius: var(--radius); padding: 18px; }
+  .seal .badge{
+    width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--blue); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; color: var(--blue); background: var(--blue-bg);
+  }
+  .seal h4{ font-family: 'IBM Plex Sans', sans-serif; text-transform: none; font-size: 14.5px; font-weight: 600; letter-spacing: 0; margin: 0 0 4px; }
+  .seal p{ font-size: 12.5px; color: var(--ink-soft); margin: 0; text-transform: none; }
+
+  /* Education — form */
+  .form-box{ border: 1.5px solid var(--ink); border-radius: var(--radius); padding: 24px; background: #FFFFFF; }
+  .form-row{ display: grid; grid-template-columns: 100px 1fr; gap: 14px; padding: 10px 0; border-top: 1px dashed var(--line); font-size: 14px; }
+  .form-row:first-child{ border-top: none; }
+  .form-row .k{ font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.05em; padding-top: 2px; }
+
+  /* Contact — sign-off */
+  .contact{
+    border: 2px solid var(--ink); border-radius: var(--radius); padding: 48px; background: #FFFFFF;
+    margin-inline: auto; max-width: 1016px;
+  }
+  .contact h2{ font-size: 24px; margin-bottom: 10px; }
+  .contact p{ color: var(--ink-soft); font-size: 14.5px; max-width: 520px; text-transform: none; margin-bottom: 30px; }
+  .signoff{ display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; border-top: 1.5px dashed var(--ink); padding-top: 24px; }
+  .signoff .field{ display: flex; flex-direction: column; gap: 6px; }
+  .signoff .k{ font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: 0.06em; }
+  .signoff .v{ font-family: 'IBM Plex Mono', monospace; font-size: 14px; border-bottom: 1px solid var(--ink); padding-bottom: 8px; text-decoration: none; color: var(--ink); }
+  .signoff .v:hover{ color: var(--red); border-color: var(--red); }
+
+  footer{ border-top: 2px solid var(--ink); padding: 24px 0; }
+  .foot-row{ display: flex; justify-content: space-between; align-items: center; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; color: var(--ink-soft); flex-wrap: wrap; gap: 10px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .foot-row a{ text-decoration: none; color: var(--ink-soft); }
+  .foot-row a:hover{ color: var(--ink); }
+
+  @media (max-width: 860px){
+    .hero-grid{ grid-template-columns: 1fr; }
+    .hero h1{ font-size: 32px; }
+    .about-grid{ grid-template-columns: 1fr; }
+    .sys-grid{ grid-template-columns: 1fr 1fr; }
+    .seal-grid{ grid-template-columns: 1fr; }
+    .signoff{ grid-template-columns: 1fr; }
+    .contact{ padding: 32px 24px; margin: 0 16px; }
+    .wrap{ padding: 0 20px; }
+    .nav{ padding: 16px 20px; }
+    .record-row{ grid-template-columns: 1fr; gap: 4px; }
+  }
+  @media (max-width: 560px){
+    .sys-grid{ grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<div class="scroll-progress" id="scrollProgress"></div>
+
+<header>
+  <div class="nav">
+    <a href="#top" class="brand">
+      Renalyn Argana
+      <span class="id-tag">ID · QA-014</span>
+    </a>
+    <div class="nav-links">
+      <ul>
+        <li><a href="#experience" data-nav="experience">Experience</a></li>
+        <li><a href="#systems" data-nav="systems">Systems</a></li>
+        <li><a href="#skills" data-nav="skills">Skills</a></li>
+        <li><a href="#contact" data-nav="contact">Contact</a></li>
+      </ul>
+      <a href="#contact" class="nav-cta">Get in touch</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <div class="eyebrow hero-anim" style="animation-delay:0.02s;">Quality Assurance / Software Test Analyst</div>
+        <h1 class="hero-anim" style="animation-delay:0.1s;">Every system gets the same treatment: <em>tested, verified, signed off.</em></h1>
+        <p class="lede hero-anim" style="animation-delay:0.22s;">I'm Renalyn — I write the test plans, run the regression cycles, and don't sign off until a system holds up the way real users will actually use it.</p>
+        <div class="hero-ctas hero-anim" style="animation-delay:0.34s;">
+          <a href="#systems" class="btn btn-primary">Inspection log</a>
+          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+      </div>
+
+      <div class="tag-card hero-anim" style="animation-delay:0.3s;">
+        <div class="tag-head"><span>Inspection tag</span><span>No. 014</span></div>
+        <div class="tag-field"><span class="k">Name</span><span class="v">Renalyn D. Argana</span></div>
+        <div class="tag-field"><span class="k">Role</span><span class="v">QA Analyst</span></div>
+        <div class="tag-field"><span class="k">Systems tested</span><span class="v">9</span></div>
+        <div class="tag-field"><span class="k">Certification</span><span class="v">ISTQB Foundations</span></div>
+        <div class="tag-field"><span class="k">In QA since</span><span class="v">2022</span></div>
+        <div class="stamp">APPROVED</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Experience</h2>
+        <span class="count mono">2 records</span>
+      </div>
+
+      <div class="record reveal">
+        <div class="record-row">
+          <span class="k">Company</span>
+          <div><h3>Elite Software and Data Security</h3></div>
+        </div>
+        <div class="record-row"><span class="k">Role</span><span class="v">Quality Assurance</span></div>
+        <div class="record-row"><span class="k">Period</span><span class="v">Oct 2022 — Present</span></div>
+        <div class="record-row">
+          <span class="k">Scope</span>
+          <ul>
+            <li>Developed comprehensive test plans for 8 project systems to ensure robust functionality</li>
+            <li>Created system manuals for clear documentation and handoff</li>
+            <li>Managed ticketing to track and resolve issues efficiently</li>
+            <li>Conducted regression testing and contributed to system revamps and optimizations</li>
+            <li>Facilitated UAT, coordinating with stakeholders to confirm features met business requirements</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="record reveal">
+        <div class="record-row">
+          <span class="k">Company</span>
+          <div><h3>Highly Succeed Inc.</h3></div>
+        </div>
+        <div class="record-row"><span class="k">Role</span><span class="v">Quality Assurance — On-the-Job Training</span></div>
+        <div class="record-row"><span class="k">Note</span><span class="v">Best Intern of the Month, January–February</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="systems" id="systems">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Systems tested</h2>
+        <span class="count mono">9 of 9 logged</span>
+      </div>
+      <div class="sys-grid">
+        <div class="sys-tag"><span class="sys-id">SN 01/09</span><h4>mWell Mobile Application</h4><span class="mini-stamp">PASS</span></div>
+        <div class="sys-tag"><span class="sys-id">SN 02/09</span><h4>Crew Management System</h4><span class="mini-stamp">PASS</span></div>
+        <div class="sys-tag"><span class="sys-id">SN 03/09</span><h4>Crew Accident / Incident Database System</h4><span class="mini-stamp">PASS</span></div>
+        <div class="sys-tag"><span class="sys-id">SN 04/09</span><h4>MEMO Circular System</h4><span class="mini-stamp">PASS</span></div>
+        <div class="sys-tag"><span class="sys-id">SN 05/09</span><h4>Online Training Assessment</h4><span class="mini-stamp">PASS</span></div>
+        <div class="sys-tag"><span class="sys-id">SN 06/09</span><h4>Crew Turnover Note System</h4><span class="mini-stamp">PASS</span></div>
+        <div class="sys-tag"><span class="sys-id">SN 07/09</span><h4>Crew Debriefing Form</h4><span class="mini-stamp">PASS</span></div>
+        <div class="sys-tag"><span class="sys-id">SN 08/09</span><h4>Crew Change Plan</h4><span class="mini-stamp">PASS</span></div>
+        <div class="sys-tag"><span class="sys-id">SN 09/09</span><h4>Mariner A+</h4><span class="mini-stamp">PASS</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills">
+    <div class="wrap about-grid">
+      <div>
+        <div class="eyebrow">How I test</div>
+        <h2 style="font-size:26px; margin-bottom:16px;">Thorough by habit, not checklist alone.</h2>
+        <p>I care about catching what breaks before a real user does — and about leaving behind documentation clear enough that the next person doesn't have to guess.</p>
+        <div style="margin-top:32px;">
+          <h3 style="font-size:14px; margin-bottom:12px;">Tools I work in</h3>
+          <div class="tool-tags">
+            <span class="tool-tag">JIRA</span>
+            <span class="tool-tag">ClickUp</span>
+            <span class="tool-tag">PyCharm</span>
+            <span class="tool-tag">Python 3.9</span>
+            <span class="tool-tag">Dev C++</span>
+            <span class="tool-tag">Xampp</span>
+            <span class="tool-tag">Visual Studio</span>
+            <span class="tool-tag">Webflow</span>
+          </div>
+        </div>
+      </div>
+      <div class="checklist">
+        <div class="check-row reveal"><span class="box">✓</span><div><h4>Comprehensive test plans</h4><p>Written to cover the paths real users actually take, not just the happy path.</p></div></div>
+        <div class="check-row reveal"><span class="box">✓</span><div><h4>System manuals that hold up</h4><p>Documentation clear enough that a teammate can pick up a system cold.</p></div></div>
+        <div class="check-row reveal"><span class="box">✓</span><div><h4>Regression testing, every cycle</h4><p>Nothing ships without checking that yesterday's fix didn't break today's feature.</p></div></div>
+        <div class="check-row reveal"><span class="box">✓</span><div><h4>Stakeholder-facing UAT</h4><p>Coordinating acceptance testing so what ships actually matches what the business asked for.</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink);">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Certifications & recognition</h2>
+        <span class="count mono">College & professional</span>
+      </div>
+      <div class="seal-grid">
+        <div class="seal reveal"><div class="badge">✓</div><div><h4>ISTQB Certification Foundations Training</h4><p>Software Quality Assurance — manual testing</p></div></div>
+        <div class="seal reveal"><div class="badge">✓</div><div><h4>Best Intern of the Month — Jan to Feb</h4><p>Highly Succeed Inc., Quality Assurance</p></div></div>
+        <div class="seal reveal"><div class="badge">✓</div><div><h4>Exemplary Leadership Skills in Development and Management as a President</h4><p>1st – 4th year college</p></div></div>
+        <div class="seal reveal"><div class="badge">✓</div><div><h4>Dean's Lister — Recognition, 2022</h4><p>"Future-taking Flight: A Journey Born of Dreams, Perseverance & Resiliency"</p></div></div>
+        <div class="seal reveal" style="grid-column: 1 / -1;"><div class="badge">✓</div><div><h4>Outstanding BS Information Technology Student</h4><p>A.Y. 2019–2020 & A.Y. 2020–2021</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap about-grid">
+      <div>
+        <div class="eyebrow">Background</div>
+        <h2 style="font-size:26px; margin-bottom:16px;">Grounded in QA, growing toward leading it.</h2>
+        <p>I started in QA during my on-the-job training and haven't left — there's something satisfying about being the last checkpoint between a build and the people who'll actually use it.</p>
+        <p>Alongside testing, I want to keep developing my team management and training skills, and to grow personally and professionally with every system I touch.</p>
+      </div>
+      <div class="form-box reveal">
+        <div class="eyebrow" style="margin-bottom:14px;">Education record</div>
+        <div class="form-row"><span class="k">Program</span><span class="v">BS in Information Technology</span></div>
+        <div class="form-row"><span class="k">School</span><span class="v">Pamantasan ng Lungsod ng Muntinlupa</span></div>
+        <div class="form-row"><span class="k">Years</span><span class="v">2018 — 2022</span></div>
+        <div class="form-row"><span class="k">Sr. High</span><span class="v">Lakewood School of Alabang Inc.</span></div>
+        <div class="form-row"><span class="k">Years</span><span class="v">2016 — 2018</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="padding-top: 10px;">
+    <div class="contact">
+      <h2>Have a system that needs a second pair of eyes?</h2>
+      <p>Whether it's a full test plan or a single regression pass before launch, I'm glad to talk through what your build needs.</p>
+      <div class="signoff">
+        <div class="field"><span class="k">Email</span><a href="mailto:renalynargana@gmail.com" class="v">renalynargana@gmail.com</a></div>
+        <div class="field"><span class="k">Phone</span><a href="tel:+639101675719" class="v">0910-167-5719</a></div>
+        <div class="field"><span class="k">Status</span><span class="v">Available</span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-row">
+    <span>© 2026 Renalyn D. Argana — QA/Software Test Analyst</span>
+    <div><a href="#top">Back to top</a></div>
+  </div>
+</footer>
+
+<script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  document.querySelectorAll('.hero-anim').forEach((el) => {
+    el.addEventListener('animationend', () => {
+     el.style.opacity = '1';
+      el.style.transform = 'none';
+      el.style.animation = 'none';
+    }, 
+     { once: true });
+  });
+
+  const progressBar = document.getElementById('scrollProgress');
+  function updateProgress(){
+    const h = document.documentElement;
+    const scrolled = h.scrollTop;
+    const height = h.scrollHeight - h.clientHeight;
+    if (progressBar){ progressBar.style.width = (height > 0 ? (scrolled / height) * 100 : 0) + '%'; }
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  const navLinks = document.querySelectorAll('a[data-nav]');
+  const spySections = Array.from(navLinks).map(a => document.getElementById(a.getAttribute('data-nav'))).filter(Boolean);
+  if ('IntersectionObserver' in window && spySections.length){
+    const spy = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          navLinks.forEach(a => a.classList.toggle('active', a.getAttribute('data-nav') === entry.target.id));
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px' });
+    spySections.forEach(s => spy.observe(s));
+  }
+
+  const revealTargets = document.querySelectorAll('.sys-tag, .reveal');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting){
+          setTimeout(() => entry.target.classList.add('in-view'), i * 45);
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealTargets.forEach(c => io.observe(c));
+  } else {
+    revealTargets.forEach(c => c.classList.add('in-view'));
+  }
+</script>
+
+</body>
+</html>

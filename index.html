@@ -176,6 +176,9 @@
     font-family: 'IBM Plex Mono', monospace; font-size: 12.5px; color: var(--ink);
     border: 1px solid var(--ink); background: #FFFFFF; padding: 7px 13px; border-radius: var(--radius);
   }
+  .skill-group{ margin-bottom: 24px; }
+  .skill-group:last-child{ margin-bottom: 0; }
+  .skill-label{ font-size: 14px; font-weight: 600; margin-bottom: 10px; text-transform: none; letter-spacing: 0; }
   .checklist{ display: flex; flex-direction: column; }
   .check-row{ display: flex; gap: 14px; padding: 16px 0; border-top: 1px dashed var(--line); align-items: flex-start; }
   .check-row:last-child{ border-bottom: 1px dashed var(--line); }
@@ -195,6 +198,49 @@
   }
   .seal h4{ font-family: 'IBM Plex Sans', sans-serif; text-transform: none; font-size: 14.5px; font-weight: 600; letter-spacing: 0; margin: 0 0 4px; }
   .seal p{ font-size: 12.5px; color: var(--ink-soft); margin: 0; text-transform: none; }
+
+  /* STLC timeline */
+  .stlc-timeline{ display: grid; grid-template-columns: repeat(6, 1fr); gap: 18px; margin-bottom: 56px; }
+  .stage{ opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease; }
+  .stage.in-view{ opacity: 1; transform: translateY(0); }
+  .stage-track{ display: flex; align-items: center; margin-bottom: 16px; }
+  .stage-dot{ width: 12px; height: 12px; border-radius: 50%; background: var(--red); flex-shrink: 0; box-shadow: 0 0 0 3px var(--red-bg); }
+  .stage-line{ flex: 1; height: 1.5px; background: var(--ink); margin-left: 6px; }
+  .stage:last-child .stage-line{ display: none; }
+  .stage h4{ font-family: 'Oswald', sans-serif; font-size: 15px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.02em; margin-bottom: 10px; line-height: 1.25; min-height: 38px; }
+  .stage p{ font-size: 12.5px; color: var(--ink-soft); text-transform: none; font-family: 'IBM Plex Sans'; margin: 0; line-height: 1.5; }
+  .stage-num{ font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--red); letter-spacing: 0.06em; margin-bottom: 6px; display: block; }
+
+  /* Document sample cards */
+  .doc-grid{ display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; }
+  .doc-card{
+    background: #FFFFFF; border: 1.5px solid var(--ink); border-radius: var(--radius); padding: 20px 16px;
+    display: flex; flex-direction: column; align-items: center; text-align: center;
+    opacity: 0; transform: translateY(12px); transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.2s ease;
+  }
+  .doc-card.in-view{ opacity: 1; transform: translateY(0); }
+  .doc-card:hover{ box-shadow: 4px 4px 0 var(--ink); transform: translate(-2px,-2px); }
+  .doc-card h4{ font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 14px; min-height: 34px; display: flex; align-items: center; }
+  .doc-preview{
+    width: 100%; height: 84px; border: 1.5px dashed var(--line); border-radius: 3px; margin-bottom: 16px;
+    display: flex; align-items: center; justify-content: center; background: var(--paper);
+    font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-soft); letter-spacing: 0.05em; text-transform: uppercase;
+  } 
+  .doc-btn{
+    font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+    padding: 8px 16px; border-radius: 14px; background: var(--ink); color: var(--paper); text-decoration: none;
+    transition: background 0.15s ease;
+  }
+  .doc-btn:hover{ background: var(--red); }
+
+  @media (max-width: 960px){
+    .stlc-timeline{ grid-template-columns: repeat(3, 1fr); row-gap: 32px; }
+    .doc-grid{ grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (max-width: 640px){
+    .stlc-timeline{ grid-template-columns: repeat(2, 1fr); }
+    .doc-grid{ grid-template-columns: repeat(2, 1fr); }
+  }
 
   /* Education — form */
   .form-box{ border: 1.5px solid var(--ink); border-radius: var(--radius); padding: 24px; background: #FFFFFF; }
@@ -251,6 +297,7 @@
       <ul>
         <li><a href="#experience" data-nav="experience">Experience</a></li>
         <li><a href="#systems" data-nav="systems">Systems</a></li>
+        <li><a href="#stlc" data-nav="stlc">STLC</a></li>
         <li><a href="#skills" data-nav="skills">Skills</a></li>
         <li><a href="#contact" data-nav="contact">Contact</a></li>
       </ul>
@@ -299,16 +346,21 @@
         </div>
         <div class="record-row"><span class="k">Role</span><span class="v">Quality Assurance Tester</span></div>
         <div class="record-row"><span class="k">Period</span><span class="v">Oct 2022 — Present</span></div>
-        <div class="record-row">
+       
+       
+        <!-- Work scope and responsibilities are commented out for now, but can be added back in if needed -->
+         <!-- <div class="record-row">
           <span class="k">Scope</span>
           <ul>
-            <li>Developed comprehensive test plans for 8 project systems to ensure robust functionality</li>
-            <li>Created system manuals for clear documentation and handoff</li>
             <li>Managed ticketing to track and resolve issues efficiently</li>
-            <li>Conducted regression testing and contributed to system revamps and optimizations</li>
-            <li>Facilitated UAT, coordinating with stakeholders to confirm features met business requirements</li>
+            <li>Created system manuals for clear documentation and handoff</li>
+            <li>Wrote clear system manuals so new team members could get up to speed without needing someone to walk them through it. </li>
+            <li>Ran regression tests on every update and helped spot ways to make the system run better. </li>
+            <li>Helped run monthly regression testing manually going through 400+ scenarios in about a week, to make sure nothing broke after updates</li>
+            <li>Manually tested the website and mobile app from start to finish to make sure everything worked the way it should before going live. </li>
+            <li>Coordinated UAT with Client/User, making sure what we built actually matched what they asked for before sign-off</li>
           </ul>
-        </div>
+        </div> -->
       </div>
 
       <div class="record reveal">
@@ -341,6 +393,77 @@
     </div>
   </section>
 
+<section style="border-bottom: 2px solid var(--ink);" id="stlc">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Software Testing Life Cycle</h2>
+        <span class="count mono">Manual Testing Cycle</span>
+      </div>
+
+      <div class="stlc-timeline">
+        <div class="stage reveal">
+          <div class="stage-track"><span class="stage-dot"></span><span class="stage-line"></span></div>
+          <h4>Requirements<br>Analysis</h4>
+          <p>Review and understand business and system requirements to identify testable scenarios and potential risks.</p>
+        </div>
+        <div class="stage reveal">
+          <div class="stage-track"><span class="stage-dot"></span><span class="stage-line"></span></div>
+          <h4>Test Planning</h4>
+          <p>Define the testing scope, strategy, timeline, and testing objectives to ensure efficient execution.</p>
+        </div>
+        <div class="stage reveal">
+          <div class="stage-track"><span class="stage-dot"></span><span class="stage-line"></span></div>
+          <h4>Test Case<br>Development</h4>
+          <p>Create clear, detailed, and reusable test cases covering happy path, negative, and edge-case scenarios.</p>
+        </div>
+        <div class="stage reveal">
+          <div class="stage-track"><span class="stage-dot"></span><span class="stage-line"></span></div>
+          <h4>Test Env Setup</h4>
+          <p>Prepare and validate a testing environment that closely matches the production setup.</p>
+        </div>
+        <div class="stage reveal">
+          <div class="stage-track"><span class="stage-dot"></span><span class="stage-line"></span></div>
+          <h4>Test Execution</h4>
+          <p>Execute test cases systematically, document results accurately, and report defects with complete details.</p>
+        </div>
+        <div class="stage reveal">
+          <div class="stage-track"><span class="stage-dot"></span></div>
+          <h4>Test Closure</h4>
+          <p>Evaluate testing outcomes, document key findings, and ensure all deliverables are completed before release.</p>
+        </div>
+      </div>
+
+      <div class="doc-grid">
+        <div class="doc-card reveal">
+          <h4>TEST PLAN</h4>
+          <div class="doc-preview">Preview</div>
+          <a href="#" class="doc-btn">See sample</a>
+        </div>
+        <div class="doc-card reveal">
+          <h4>TEST SCENARIO &amp; TEST CASE</h4>
+          <div class="doc-preview">Preview</div>
+          <a href="#" class="doc-btn">See sample</a>
+        </div>
+        <div class="doc-card reveal">
+          <h4>BUG REPORT</h4>
+          <div class="doc-preview">Preview</div>
+          <a href="#" class="doc-btn">See sample</a>
+        </div>
+        <div class="doc-card reveal">
+          <h4>TEST EXECUTION REPORT</h4>
+          <div class="doc-preview">Preview</div>
+          <a href="#" class="doc-btn">See sample</a>
+        </div>
+        <div class="doc-card reveal">
+          <h4>SIGN-OFF FORM</h4>
+          <div class="doc-preview">Preview</div>
+          <a href="#" class="doc-btn">See sample</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
   <section id="skills">
     <div class="wrap about-grid">
       <div>
@@ -348,19 +471,47 @@
         <h2 style="font-size:26px; margin-bottom:16px;">Thorough by habit, not checklist alone.</h2>
         <p>I care about catching what breaks before a real user does — and about leaving behind documentation clear enough that the next person doesn't have to guess.</p>
         <div style="margin-top:32px;">
-          <h3 style="font-size:14px; margin-bottom:12px;">Tools I work in</h3>
-          <div class="tool-tags">
-            <span class="tool-tag">JIRA</span>
-            <span class="tool-tag">ClickUp</span>
-            <span class="tool-tag">Postman</span>
-            <span class="tool-tag">Gsheets</span>
-            <span class="tool-tag">PyCharm</span>
-            <span class="tool-tag">Python 3.9</span>
-            <span class="tool-tag">Dev C++</span>
-            <span class="tool-tag">Xampp</span>
-            <span class="tool-tag">Visual Studio</span>
-            <span class="tool-tag">Webflow</span>
-            <span class="tool-tag">Microsoft Excel</span>
+          <div class="tech-skills">
+            <div class="skill-group">
+              <h3 class="skill-label">Software Quality Assurance</h3>
+              <div class="tool-tags">
+                <span class="tool-tag">Test Case Creation (Positive & Negative)</span>
+                <span class="tool-tag">System Integration Testing (SIT)</span>
+                <span class="tool-tag">User Acceptance Testing (UAT)</span>
+                <span class="tool-tag">Agile & Waterfall SDLC</span>
+                <span class="tool-tag">Defect / Bug Reporting</span>
+                <span class="tool-tag">Test Case & Bug Prioritization</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3 class="skill-label">Testing Techniques</h3>
+              <div class="tool-tags">
+                <span class="tool-tag">Web & Mobile Testing</span>
+                <span class="tool-tag">Regression Testing</span>
+                <span class="tool-tag">Smoke Testing</span>
+                <span class="tool-tag">Sanity Testing</span>
+                <span class="tool-tag">Functional Testing</span>
+                <span class="tool-tag">End-to-End Testing</span>
+                <span class="tool-tag">API Testing</span>
+              </div>
+            </div>
+
+            <div class="skill-group">
+              <h3 class="skill-label">Bug Tracking Tools</h3>
+              <div class="tool-tags">
+                <span class="tool-tag">ClickUp</span>
+                <span class="tool-tag">JIRA</span>
+              </div>
+            </div>
+
+             <div class="skill-group">
+              <h3 class="skill-label">Platforms</h3>
+              <div class="tool-tags">
+                <span class="tool-tag">Windows</span>
+                <span class="tool-tag">MacOS</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -388,6 +539,8 @@
       </div>
     </div>
   </section>
+
+
 
   <section>
     <div class="wrap about-grid">

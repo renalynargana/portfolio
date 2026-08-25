@@ -237,10 +237,14 @@
   .doc-card:hover{ box-shadow: 4px 4px 0 var(--ink); transform: translate(-2px,-2px); }
   .doc-card h4{ font-family: 'Oswald', sans-serif; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; margin-bottom: 14px; min-height: 34px; display: flex; align-items: center; }
   .doc-preview{
-    width: 100%; height: 84px; border: 1.5px dashed var(--line); border-radius: 3px; margin-bottom: 16px;
+    width: 100%; height: 130px; border: 1.5px dashed var(--line); border-radius: 3px; margin-bottom: 16px;
     display: flex; align-items: center; justify-content: center; background: var(--paper);
     font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--ink-soft); letter-spacing: 0.05em; text-transform: uppercase;
-  } 
+    overflow: hidden;
+  }
+  .doc-preview img{
+    width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;
+  }
   .doc-btn{
     font-family: 'IBM Plex Mono', monospace; font-weight: 500; font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
     padding: 8px 16px; border-radius: 14px; background: var(--ink); color: var(--paper); text-decoration: none;
@@ -525,8 +529,7 @@
           <h4>TEST PLAN</h4>
           <div class="doc-preview">
                <img src="QA_Cycle/TestPlan.png" 
-                alt="Test Plan Preview"
-                style="width:100%">
+                alt="Test Plan Preview">
           </div>
           <a href="QA_Cycle/TestPlan.pdf" target="_blank" class="doc-btn">See sample</a>
         </div>
@@ -536,8 +539,7 @@
           <h4>TEST SCENARIO &amp; TEST CASE</h4>
           <div class="doc-preview">
                <img src="QA_Cycle/TestScenario-TestCases.png" 
-                alt="Test Scenario Report Preview"
-                style="width:200%">
+                alt="Test Scenario Report Preview">
           </div>
           <a href="https://docs.google.com/spreadsheets/d/13AfpmzK1O6gGGFJhMofsqC-0b02-eDJ3/edit?usp=sharing&ouid=100747200113575116360&rtpof=true&sd=true" target="_blank" class="doc-btn">See sample</a>
         </div>
@@ -547,8 +549,7 @@
           <h4>BUG REPORT</h4>
           <div class="doc-preview">
                <img src="QA_Cycle/JiraBugTix.png" 
-                    alt="Bug Report Preview"
-                    style="height:100%">
+                    alt="Bug Report Preview">
           </div>
           <a href="QA_Cycle/JiraBugTix.png" target="_blank" class="doc-btn">See sample</a>
         </div>
@@ -558,8 +559,7 @@
           <h4>TEST EXECUTION REPORT</h4>
           <div class="doc-preview">
               <img src="QA_Cycle/TestExecutionReport.png" 
-                    alt="Test Execution Preview"
-                    style="width:90%">
+                    alt="Test Execution Preview">
             </div>
           <a href="QA_Cycle/TestExecutionReport.pdf" target="_blank" class="doc-btn">See sample</a>
         </div>
@@ -569,8 +569,7 @@
           <h4>SIGN-OFF FORM</h4>
           <div class="doc-preview">
              <img src="QA_Cycle/QASignOff.png" 
-                 alt="Sign-Off Form Preview"
-                 style="width:90%">
+                 alt="Sign-Off Form Preview">
           </div>
           <a href="QA_Cycle/QASignOff.pdf" target="_blank" class="doc-btn">See sample</a>
         </div>

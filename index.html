@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Renalyn D. Argana — QA / Software Test Analyst</title>
+<title>Renalyn D. Argana — QA / Quality Assurance Tester</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -149,7 +149,7 @@
 
   /* Systems grid */
   .systems{ border-top: 2px solid var(--ink); border-bottom: 2px solid var(--ink); background: repeating-linear-gradient(135deg, rgba(179,53,43,0.015) 0 12px, transparent 12px 24px); }
-  .sys-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 20px; }
+  .sys-grid{ display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px 20px; align-items: start; }
   .sys-tag{
     background: #FFFFFF; border: 1.5px solid var(--ink); border-radius: var(--radius); padding: 18px 16px 16px;
     position: relative; opacity: 0; transform: translateY(12px);
@@ -167,6 +167,21 @@
     transition: opacity 0.3s ease 0.15s, transform 0.3s ease 0.15s;
   }
   .sys-tag.in-view .mini-stamp{ opacity: 0.9; transform: rotate(-8deg) scale(1); }
+
+  /* Expandable "what I did" panel */
+  .sys-tag{ cursor: pointer; }
+  .sys-toggle{
+    display: flex; align-items: center; justify-content: space-between;
+    width: 100%; margin-top: 12px; padding-top: 10px; border-top: 1px dashed var(--line);
+    font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--ink-soft);
+    text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  .sys-toggle-icon{ font-size: 14px; font-weight: 700; color: var(--red); transition: transform 0.25s ease; }
+  .sys-tag[data-expanded="true"] .sys-toggle-icon{ transform: rotate(45deg); }
+  .sys-details{ max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.35s ease, opacity 0.3s ease, margin-top 0.35s ease; }
+  .sys-tag[data-expanded="true"] .sys-details{ max-height: 280px; opacity: 1; margin-top: 12px; }
+  .sys-details ul{ margin: 0; padding-left: 18px; }
+  .sys-details li{ font-size: 12px; color: var(--ink-soft); margin-bottom: 6px; line-height: 1.5; font-family: 'IBM Plex Sans'; text-transform: none; }
 
   /* Skills */
   .about-grid{ display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 52px; }
@@ -381,14 +396,85 @@
         <span class="count mono">8 of 8 logged</span>
       </div>
       <div class="sys-grid">
-        <div class="sys-tag"><span class="sys-id">SN 01/08</span><h4>mWell Mobile Application</h4><span class="mini-stamp">PASS</span></div>
-        <div class="sys-tag"><span class="sys-id">SN 02/08</span><h4>mAgri Mobile Application</h4><span class="mini-stamp">PASS</span></div>
-        <div class="sys-tag"><span class="sys-id">SN 03/08</span><h4>KLine KIDS - Crew Accident / Incident Database System</h4><span class="mini-stamp">PASS</span></div>
-        <div class="sys-tag"><span class="sys-id">SN 04/08</span><h4>KLine CMS - Crew Management System</h4><span class="mini-stamp">PASS</span></div>
-        <div class="sys-tag"><span class="sys-id">SN 05/08</span><h4>KLine Crew Debriefing Form</h4><span class="mini-stamp">PASS</span></div>
-        <div class="sys-tag"><span class="sys-id">SN 06/08</span><h4>KLine Crew Change Plan</h4><span class="mini-stamp">PASS</span></div>
-        <div class="sys-tag"><span class="sys-id">SN 07/08</span><h4>Veripro - Crew Management System </h4><span class="mini-stamp">PASS</span></div>
-        <div class="sys-tag"><span class="sys-id">SN 08/08</span><h4>MEMO Circular System</h4><span class="mini-stamp">PASS</span></div>
+       
+        <!--Expi #1-->
+        <div class="sys-tag" data-expanded="false"><span class="sys-id">SN 01/08</span><h4>mWell Mobile Application</h4><span class="mini-stamp">RELEASE</span>
+          <span class="sys-toggle" aria-expanded="false">What I did <span class="sys-toggle-icon">+</span></span>
+          <div class="sys-details"><ul>
+            <li>Developed test cases based on system requirements and vendor documentation covering teleconsultation, e-prescription, and patient record features.</li>
+            <li>Coordinated with the project team to align testing timelines with development sprints and deployment schedules.</li>
+          </ul></div>
+        </div>
+        <!--Expi #2-->
+        <div class="sys-tag" data-expanded="false"><span class="sys-id">SN 02/08</span><h4>mAgri Mobile Application</h4><span class="mini-stamp">RELEASE</span>
+          <span class="sys-toggle" aria-expanded="false">What I did <span class="sys-toggle-icon">+</span></span>
+          <div class="sys-details"><ul>
+            <li> Created test cases from system requirements documentation to validate farm data tracking, crop monitoring, and marketplace modules.</li>
+          </ul></div>
+        </div>
+
+         <!--Expi #3-->
+        <div class="sys-tag" data-expanded="false"><span class="sys-id">SN 03/08</span><h4>KLine KIDS - Crew Accident / Incident Database System</h4><span class="mini-stamp">RELEASE</span>
+          <span class="sys-toggle" aria-expanded="false">What I did <span class="sys-toggle-icon">+</span></span>
+          <div class="sys-details"><ul>
+            <li> Created test cases based on system requirements to validate incident logging, accident report generation, and case tracking functions.</li>
+            <li> Performed smoke, sanity, and regression testing to ensure accurate data capture and system stability across releases.</li>
+            <li> Coordinated with manning and project teams to verify incident workflows matched operational requirements.</li>
+            <li> Provided BU testing support pre- and post-deployment to confirm the system was ready for live incident reporting use.</li>
+          </ul></div>
+        </div>
+        
+         <!--Expi #4-->
+        <div class="sys-tag" data-expanded="false"><span class="sys-id">SN 04/08</span><h4>KLine CMS - Crew Management System</h4><span class="mini-stamp">RELEASE</span>
+          <span class="sys-toggle" aria-expanded="false">What I did <span class="sys-toggle-icon">+</span></span>
+          <div class="sys-details"><ul>
+            <li> Created test cases covering seafarer profile creation, document management, and crew record updates based on system requirements</li>
+            <li> Ran multiple testing cycles — smoke, sanity, bug retesting, and regression — to validate profile data integrity across features.</li>
+            <li> Liaised with project stakeholders to ensure smooth rollout of new crew management functionalities.</li>
+            <li> Delivered BU testing support during pre- and post-deployment phases to verify accuracy of seafarer records in production.</li>
+          </ul></div>
+        </div>
+
+         <!--Expi #5-->
+        <div class="sys-tag" data-expanded="false"><span class="sys-id">SN 05/08</span><h4>KLine Crew Debriefing Form</h4><span class="mini-stamp">RELEASE</span>
+          <span class="sys-toggle" aria-expanded="false">What I did <span class="sys-toggle-icon">+</span></span>
+          <div class="sys-details"><ul>
+            <li> Developed test cases to validate the digital debriefing form flow, from submission to feedback record storage, based on requirements documentation.</li>
+            <li> Executed sanity, and regression testing to confirm form accuracy and data consistency after each update.</li>
+            <li> Coordinated with the team to align form logic with actual post-disembarkation feedback processes.</li>
+            <li> Supported BU testing before and after deployment to ensure the debriefing form worked correctly for end users.</li>
+          </ul></div>
+        </div>
+
+         <!--Expi #6-->
+        <div class="sys-tag" data-expanded="false"><span class="sys-id">SN 06/08</span><h4>KLine Crew Change Plan</h4><span class="mini-stamp">RELEASE</span>
+          <span class="sys-toggle" aria-expanded="false">What I did <span class="sys-toggle-icon">+</span></span>
+          <div class="sys-details"><ul>
+            <li> Created test cases to validate embarkation and disembarkation scheduling, crew change requests, and plan updates.</li>
+            <li> Performed smoke, sanity, bug retesting, and regression testing across releases to ensure scheduling accuracy.</li>
+            <li> Coordinated with project members to confirm crew change workflows reflected real manning operations.</li>
+          </ul></div>
+        </div>
+
+        <!--Expi #7-->
+        <div class="sys-tag" data-expanded="false"><span class="sys-id">SN 07/08</span><h4>Veripro - Crew Management System </h4><span class="mini-stamp">RELEASE</span>
+          <span class="sys-toggle" aria-expanded="false">What I did <span class="sys-toggle-icon">+</span></span>
+          <div class="sys-details"><ul>
+            <li> Built test cases for crew change transactions and crew profile management modules based on vendor system requirements.</li>
+            <li> Ran multiple test cycles (smoke, sanity, regression, bug retest) to validate embark/disembark processing and profile accuracy.</li>
+            <li> Worked with the project team to troubleshoot issues and support smooth feature implementation.</li>
+          </ul></div>
+        </div>
+
+         <!--Expi #8-->
+        <div class="sys-tag" data-expanded="false"><span class="sys-id">SN 08/08</span><h4>MEMO Circular System </h4><span class="mini-stamp">RELEASE</span>
+          <span class="sys-toggle" aria-expanded="false">What I did <span class="sys-toggle-icon">+</span></span>
+          <div class="sys-details"><ul>
+            <li> Developed test cases to validate memo circulation, vessel record updates, and document distribution features.</li>
+            <li> Conducted smoke, sanity, regression, and bug retesting to ensure reliable circulation and database accuracy</li>
+            <li> Coordinated with the team to align memo workflows with actual vessel documentation processes.</li>
+          </ul></div>
+        </div>
         </div>
     </div>
   </section>
@@ -433,31 +519,40 @@
         </div>
       </div>
 
+        <!--Test Plan-->
       <div class="doc-grid">
         <div class="doc-card reveal">
           <h4>TEST PLAN</h4>
           <div class="doc-preview">Preview</div>
-          <a href="#" class="doc-btn">See sample</a>
+          <a href="#" target="_blank" class="doc-btn">See sample</a>
         </div>
+        
+        <!--Test Scenario and Test Cases-->
         <div class="doc-card reveal">
           <h4>TEST SCENARIO &amp; TEST CASE</h4>
           <div class="doc-preview">Preview</div>
-          <a href="#" class="doc-btn">See sample</a>
+          <a href="https://docs.google.com/spreadsheets/d/1OF8gdAMVbGjKoUdl-7rbKjRFoGxTSn4P/edit?usp=sharing&ouid=100747200113575116360&rtpof=true&sd=true" target="_blank" class="doc-btn">See sample</a>
         </div>
+        
+        <!--Bug Report-->
         <div class="doc-card reveal">
           <h4>BUG REPORT</h4>
           <div class="doc-preview">Preview</div>
-          <a href="#" class="doc-btn">See sample</a>
+          <a href="https://drive.google.com/file/d/1WTo8GWG_JG3nvIRGMLgxf5pmmo-zQ4Uv/view?usp=sharing" target="_blank" class="doc-btn">See sample</a>
         </div>
+        
+        <!--Test Execution Report-->
         <div class="doc-card reveal">
           <h4>TEST EXECUTION REPORT</h4>
           <div class="doc-preview">Preview</div>
-          <a href="#" class="doc-btn">See sample</a>
+          <a href="#" target="_blank" class="doc-btn">See sample</a>
         </div>
+        
+         <!--Signoff--> 
         <div class="doc-card reveal">
           <h4>SIGN-OFF FORM</h4>
           <div class="doc-preview">Preview</div>
-          <a href="#" class="doc-btn">See sample</a>
+          <a href="#" target="_blank" class="doc-btn">See sample</a>
         </div>
       </div>
     </div>
@@ -566,8 +661,8 @@
       <h2>Have a system that needs a second pair of eyes?</h2>
       <p>Whether it's a full test plan or a single regression pass before launch, I'm glad to talk through what your build needs.</p>
       <div class="signoff">
-        <div class="field"><span class="k">Email</span><a href="mailto:renalynargana@gmail.com" class="v">renalynargana@gmail.com</a></div>
-        <div class="field"><span class="k">Phone</span><a href="tel:+639101675719" class="v">0910-167-5719</a></div>
+        <div class="field"><span class="k">Email</span><a href="mailto:renalynargana@gmail.com" class="v">✉ renalynargana@gmail.com</a></div>
+        <div class="field"><span class="k">Phone</span><a href="tel:+639101675719" class="v">📞 0910-167-5719</a></div>
         <div class="field"><span class="k">Status</span><span class="v">Available</span></div>
       </div>
     </div>
@@ -630,6 +725,23 @@
   } else {
     revealTargets.forEach(c => c.classList.add('in-view'));
   }
+
+  const sysCards = document.querySelectorAll('.sys-tag');
+  sysCards.forEach((card) => {
+    const toggle = card.querySelector('.sys-toggle');
+    card.addEventListener('click', () => {
+      const isOpen = card.getAttribute('data-expanded') === 'true';
+      sysCards.forEach((c) => {
+        c.setAttribute('data-expanded', 'false');
+        const t = c.querySelector('.sys-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      });
+      if (!isOpen){
+        card.setAttribute('data-expanded', 'true');
+        if (toggle) toggle.setAttribute('aria-expanded', 'true');
+      }
+    });
+  });
 </script>
 
 </body>
